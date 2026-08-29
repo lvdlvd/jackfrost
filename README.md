@@ -3,6 +3,13 @@
 Simulated snow cover for aerial and satellite imagery, calibrated against
 real Sentinel-2 winter captures.
 
+![summer | s=0.5 | s=1.0 | real cover | real winter](doc/chip0_panel.jpg)
+
+*A 15 km validation chip (MGRS 31TDL, 10 m/px). Left to right: the real
+summer capture; snowified at s=0.5 and s=1.0 (synthetic patchy cover);
+snowified with the cover forced to the real winter snow mask; the real
+winter capture of the same tile. Only the rightmost panel is real winter.*
+
 Snow is the extreme appearance shift for visual navigation: it erases the
 field mosaic and most photometric texture, while dark linear features —
 forest boundaries, hedgerows, streams, plowed roads — stay visible or grow
