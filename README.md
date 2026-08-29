@@ -45,5 +45,20 @@ in the frame's own display space; `-gsd` rescales the physical-length
 constants when the frame resolution differs from Sentinel-2's 10 m/px.
 `frames_params.json` carries the domain overrides for the vnavsim renders.
 
+## Landscape priors
+
+Snow appearance is landscape-dependent: open plains bury the field
+structure under smooth uniform white, bocage keeps a dark hedgerow
+lattice, the high foreland pushes brightness further and turns the
+lattice nearly off. Parameters fitted on one landscape do not transfer
+(objective inflates ~30x), but per-landscape fits recover near-home
+quality. `params/` holds the fitted sets — `bocage.json` (the built-in
+default), `lowland.json`, `alpine.json` — for `-params`.
+
+`pull` fetches a paired summer/winter capture of any region:
+
+    pull -bbox "7.4,46.1,8.3,46.6" -out raw_alpine
+    snowify -raw raw_alpine -summer <id> -winter <id> -autochips -fit 600
+
 Raw S2 chips are pulled from the public earth-search STAC
 (sentinel-cogs); GeoTIFF reading via github.com/lvdlvd/geotiff.

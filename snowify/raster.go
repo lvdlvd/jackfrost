@@ -44,6 +44,20 @@ func crop(src *img, x0, y0, size int) *img {
 	return dst
 }
 
+// downsample2 halves resolution by 2x2 averaging.
+func downsample2(src *img) *img {
+	dst := newImg(src.w/2, src.h/2)
+	for y := 0; y < dst.h; y++ {
+		for x := 0; x < dst.w; x++ {
+			dst.px[y*dst.w+x] = (src.px[(2*y)*src.w+2*x] +
+				src.px[(2*y)*src.w+2*x+1] +
+				src.px[(2*y+1)*src.w+2*x] +
+				src.px[(2*y+1)*src.w+2*x+1]) / 4
+		}
+	}
+	return dst
+}
+
 func upsample2(src *img) *img {
 	dst := newImg(src.w*2, src.h*2)
 	for y := 0; y < dst.h; y++ {

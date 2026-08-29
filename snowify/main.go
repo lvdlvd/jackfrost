@@ -74,6 +74,10 @@ func main() {
 		return
 	}
 
+	if *autoChips {
+		pickChips()
+	}
+
 	// Load one band at a time (a full 10 m band is 480 MB as float32) and
 	// keep only the chip crops.
 	sum := map[string][]*img{}
@@ -93,6 +97,7 @@ func main() {
 		fmt.Printf("chip%d ready, winter ref %v\n", n, ctxs[n].ref)
 	}
 
+	fmt.Printf("objective with current params: %.4f\n", objective(ctxs, p))
 	if *fitIters > 0 {
 		p = fit(ctxs, *fitIters)
 		writeJSON(*outDir+"/fitted.json", p)

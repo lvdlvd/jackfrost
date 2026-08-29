@@ -55,16 +55,16 @@ type dim struct {
 }
 
 var dims = []dim{
-	{"TexMid", 60, 260, false, func(p *params) *float64 { return &p.TexMid }},
-	{"TexWidth", 8, 40, true, func(p *params) *float64 { return &p.TexWidth }},
-	{"LumMid", 180, 350, false, func(p *params) *float64 { return &p.LumMid }},
+	{"TexMid", 60, 420, false, func(p *params) *float64 { return &p.TexMid }},
+	{"TexWidth", 8, 60, true, func(p *params) *float64 { return &p.TexWidth }},
+	{"LumMid", 180, 450, false, func(p *params) *float64 { return &p.LumMid }},
 	{"LumWidth", 15, 70, true, func(p *params) *float64 { return &p.LumWidth }},
-	{"LatticeDiv", 60, 400, true, func(p *params) *float64 { return &p.LatticeDiv }},
-	{"PaintP50", 4200, 8500, false, func(p *params) *float64 { return &p.PaintP50 }},
+	{"LatticeDiv", 60, 1200, true, func(p *params) *float64 { return &p.LatticeDiv }},
+	{"PaintP50", 4200, 9200, false, func(p *params) *float64 { return &p.PaintP50 }},
 	{"PaintExp", 0.4, 2.4, false, func(p *params) *float64 { return &p.PaintExp }},
-	{"PaintMin", 3000, 4500, false, func(p *params) *float64 { return &p.PaintMin }},
-	{"PaintMax", 7500, 9000, false, func(p *params) *float64 { return &p.PaintMax }},
-	{"PsfSigma", 0.3, 1.2, true, func(p *params) *float64 { return &p.PsfSigma }},
+	{"PaintMin", 2500, 4500, false, func(p *params) *float64 { return &p.PaintMin }},
+	{"PaintMax", 7500, 9800, false, func(p *params) *float64 { return &p.PaintMax }},
+	{"PsfSigma", 0.3, 1.6, true, func(p *params) *float64 { return &p.PsfSigma }},
 }
 
 // fixed enforces the paint ordering PaintMin < PaintP50 < PaintMax.
