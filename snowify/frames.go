@@ -1,6 +1,6 @@
-// Rendered-frame mode: apply snowify to the vnavsim nadir-fisheye renders
-// (8-bit PNGs) — the closer-to-ground path, and the input to the
-// margin-under-snow matcher eval (snowified eval set vs its clear twin).
+// Rendered-frame mode: apply snowify to rendered nadir frames (8-bit PNGs),
+// each frame on its own; flight mode (flight.go) ties the snow to the
+// ground across the frames of a flight.
 //
 // One canonical parameter set, two radiometric domains. S2 L2A DNs are
 // reflectance-scaled and DIM (summer fields ~550 DN of 8000); rendered

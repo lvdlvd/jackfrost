@@ -43,7 +43,51 @@ Frame mode normalizes each frame's radiometry into the calibration space
 for the gates (median luminance to the summer clear-land level) and blends
 in the frame's own display space; `-gsd` rescales the physical-length
 constants when the frame resolution differs from Sentinel-2's 10 m/px.
-`frames_params.json` carries the domain overrides for the vnavsim renders.
+`frames_params.json` carries the domain overrides for rendered aerial
+frames.
+
+## Flight mode: snow and clouds on a simulated flight
+
+Frame mode snowifies each picture on its own. On the frames of a flight
+(one render per aircraft pose, 15 a second) that makes the snow patches
+jump from frame to frame, and frames from a low aircraft range from 0.1 to
+1 m/px. Flight mode ties the weather to the ground instead. With the poses,
+the lens the frames were rendered through and a DEM, every pixel's ground
+point is found by casting its ray onto the terrain, and:
+
+- **snow** keeps the calibrated model but takes its scale from each frame's
+  ground resolution and its partial-cover noise from a 10 m field on the
+  ground, so a snow patch stays where it is; the snow degree rises with the
+  ground height; open water stays open (`-water`), and the asphalt of
+  plowed roads stays clear (`-roads`). Roads are plowed by chance, by class:
+  motorways nearly always, main roads mostly, streets and service roads
+  seldom (`-plow` changes the shares), decided along the network with a
+  correlation length of a few kilometres (`-plow-km`), fixed for the flight;
+- **clouds** are a 3-D layer of scattered cumulus between a base and a top
+  above the smoothed terrain, drifting with the wind, ray-marched through
+  the lens with sunlit domes, grey lee sides and shadows on the ground
+  (sun position from the pose time). The aircraft flies through the layer
+  when its path crosses it;
+- **both** draws the cloud over the snow in one pass.
+
+```
+snowify -poses poses.json -calib lens.json -dem dem/ -frames clear/ -out winter/ \
+        -weather snow -params params/winter_ortho.json -a-fixed -1 \
+        -roads roads.geojson -water water.geojson -h-low 600 -h-high 800
+snowify -poses poses.json -calib lens.json -dem dem/ -frames clear/ -out cloudy/ \
+        -weather cloud -cloud-cover 0.375 -cloud-base 500 -cloud-top 800 -wind 2,-5
+snowify ... -weather snow+cloud ...
+```
+
+`poses.json` is `{"poses": [...]}` with `lat_deg`, `lon_deg`, `alt_m_msl`,
+`heading_deg`, optionally `body_roll_deg`, `body_pitch_deg`,
+`body_yaw_deg`, and for clouds `t_s` and `time_utc`. The lens is a
+Brown-Conrady calibration (see `snowify/lens.go`, `testdata/lens.json`),
+the DEM a directory of GeoTIFF tiles in the poses' height datum.
+`params/winter_ortho.json` is the open-plains fit with the gates set for
+summer orthophotos. A rerun skips frames already written, so a stopped run
+continues. The theory of operation is at the top of `snowify/flight.go`
+and `snowify/clouds.go`.
 
 ## Landscape priors
 

@@ -1,7 +1,7 @@
 // Snowify — classical image-space snow synthesis on Sentinel-2 chips.
 //
-// JackFrost's first committed tool. The python probes (jackfrost_pull*.py,
-// jackfrost_stats2.py on macbook1) established the calibration: over tile
+// JackFrost's first committed tool. Python probes of paired summer and
+// winter captures established the calibration: over tile
 // 31TDL, snow-covered land is ~9x brighter than clear land and carries ~6x
 // the gradient energy — snow is not a whiteout, it is bright relief crossed
 // by a dark lattice of hedgerows, treelines, streams and roads.
@@ -17,6 +17,10 @@
 // see fit.go — with the user's eye reserved for bigger gates. Run with
 // -fit N to refit the appearance constants against the real winter
 // captures; without it, params come from -params (or the defaults).
+//
+// Flight mode (-poses, flight.go) puts the snow, a layer of cumulus
+// (clouds.go), or both on the rendered frames of a simulated flight,
+// anchored to the ground.
 //
 // Self-validation: chips of 31TDL, summer S2B_20250807 snowified and
 // panelled against the real winter capture S2A_20240120 of the same
@@ -69,6 +73,10 @@ func main() {
 		fmt.Println("params from", *paramsFile)
 	}
 
+	if *posesPath != "" { // flight mode: see flight.go
+		runFlight(p)
+		return
+	}
 	if *framesDir != "" {
 		runFrames(p)
 		return

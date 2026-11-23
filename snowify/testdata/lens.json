@@ -1,0 +1,6 @@
+{
+ "comment": "a made-up wide lens for the tests: 1920x1200, about 95 deg across, a radial polynomial that folds near the corners",
+ "image_size": [1920, 1200],
+ "fx": 900, "fy": 900, "cx": 959.5, "cy": 599.5,
+ "k1": -0.28, "k2": 0.07, "k3": -0.008, "p1": 0.0004, "p2": -0.0003
+}

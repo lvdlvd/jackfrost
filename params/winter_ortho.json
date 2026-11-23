@@ -1,0 +1,14 @@
+{
+ "TexMid": 280,
+ "TexWidth": 45,
+ "LumMid": 420,
+ "LumWidth": 30,
+ "LatticeDiv": 860.5678394059469,
+ "PaintP50": 6413.766542944993,
+ "PaintExp": 1.950566949044936,
+ "PaintMin": 2500,
+ "PaintMax": 8428.261559002933,
+ "PsfSigma": 0.33079806235563797,
+ "GreenMid": 1,
+ "GreenWidth": 0.02
+}
